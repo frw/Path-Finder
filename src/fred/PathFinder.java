@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -55,7 +56,6 @@ public class PathFinder extends JFrame {
 	public static final String A_STAR_CHEBYSHEV = "A-Star (Chebyshev Distance)";
 	public static final String A_STAR_EUCLIDEAN = "A-Star (Euclidean Distance)";
 	public static final String DIJKSTRA = "Dijkstra";
-	public static final String BREADTH_FIRST_SEARCH = "Breadth-First Search";
 	public static final String BIDIRECTIONAL_BREADTH_FIRST_SEARCH = "Bidirectional Breadth-First Search";
 
 	static {
@@ -129,9 +129,9 @@ public class PathFinder extends JFrame {
 				Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
-		JComboBox cmbbxAlgorithm = new JComboBox(new String[] {
+		JComboBox<String> cmbbxAlgorithm = new JComboBox<String>(new String[] {
 				A_STAR_MANHATTAN, A_STAR_CHEBYSHEV, A_STAR_EUCLIDEAN, DIJKSTRA,
-				BREADTH_FIRST_SEARCH, BIDIRECTIONAL_BREADTH_FIRST_SEARCH });
+				BIDIRECTIONAL_BREADTH_FIRST_SEARCH });
 		cmbbxAlgorithm.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -470,6 +470,10 @@ public class PathFinder extends JFrame {
 
 			List<Node> closed = copy(algorithm.getVisitedNodes());
 			List<Node> open = copy(algorithm.getUnvisitedNodes());
+
+			g.setColor(Color.WHITE);
+			Rectangle canvas = g.getClipBounds();
+			g.fillRect(canvas.x, canvas.y, canvas.width, canvas.height);
 
 			g.setColor(Color.GRAY);
 			drawNodes(walls, g);
