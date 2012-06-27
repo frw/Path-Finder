@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.frederickw.pathfinder.Algorithm;
+import com.frederickw.pathfinder.MapData;
 import com.frederickw.pathfinder.Node;
-import com.frederickw.pathfinder.PathFinder;
 import com.frederickw.pathfinder.struct.BinaryHeap;
 
 public class BBFS implements Algorithm {
@@ -33,10 +33,10 @@ public class BBFS implements Algorithm {
 
 	@Override
 	public void init() {
-		Node source = new Node(PathFinder.getSource());
+		Node source = new Node(MapData.source);
 		unvisitedQueueS.add(source);
 		unvisitedSetS.add(source);
-		Node target = new Node(PathFinder.getTarget());
+		Node target = new Node(MapData.target);
 		unvisitedQueueT.add(target);
 		unvisitedSetT.add(target);
 	}
@@ -54,7 +54,7 @@ public class BBFS implements Algorithm {
 			}
 			unvisitedSetS.remove(currentS);
 			visitedSetS.add(currentS);
-			for (final Node next : PathFinder.getTraversable(currentS)) {
+			for (final Node next : MapData.getTraversable(currentS)) {
 				if (!visitedSetS.contains(next)) {
 					final double dist = currentS.distance
 							+ distance(currentS, next);
@@ -84,7 +84,7 @@ public class BBFS implements Algorithm {
 			}
 			unvisitedSetT.remove(currentT);
 			visitedSetT.add(currentT);
-			for (final Node next : PathFinder.getTraversable(currentT)) {
+			for (final Node next : MapData.getTraversable(currentT)) {
 				if (!visitedSetT.contains(next)) {
 					final double dist = currentT.distance
 							+ distance(currentT, next);

@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.frederickw.pathfinder.Algorithm;
+import com.frederickw.pathfinder.MapData;
 import com.frederickw.pathfinder.Node;
-import com.frederickw.pathfinder.PathFinder;
 import com.frederickw.pathfinder.struct.BinaryHeap;
 
 public class Dijkstra implements Algorithm {
@@ -22,7 +22,7 @@ public class Dijkstra implements Algorithm {
 
 	@Override
 	public void init() {
-		Node source = new Node(PathFinder.getSource());
+		Node source = new Node(MapData.source);
 		unvisitedQueue.add(source);
 		unvisitedSet.add(source);
 	}
@@ -33,10 +33,10 @@ public class Dijkstra implements Algorithm {
 			current = unvisitedQueue.poll();
 			unvisitedSet.remove(current);
 			visitedSet.add(current);
-			if (current.equals(PathFinder.getTarget())) {
+			if (current.equals(MapData.target)) {
 				return true;
 			}
-			for (final Node next : PathFinder.getTraversable(current)) {
+			for (final Node next : MapData.getTraversable(current)) {
 				if (!visitedSet.contains(next)) {
 					final double dist = current.distance
 							+ distance(current, next);

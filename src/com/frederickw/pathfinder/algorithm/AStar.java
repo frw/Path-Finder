@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.frederickw.pathfinder.Algorithm;
+import com.frederickw.pathfinder.MapData;
 import com.frederickw.pathfinder.Node;
-import com.frederickw.pathfinder.PathFinder;
 import com.frederickw.pathfinder.struct.BinaryHeap;
 
 public class AStar implements Algorithm {
@@ -32,7 +32,7 @@ public class AStar implements Algorithm {
 
 	@Override
 	public void init() {
-		AStarNode source = new AStarNode(PathFinder.getSource());
+		AStarNode source = new AStarNode(MapData.source);
 		openQueue.add(source);
 		openSet.add(source);
 	}
@@ -43,10 +43,10 @@ public class AStar implements Algorithm {
 			current = openQueue.poll();
 			openSet.remove(current);
 			closedSet.add(current);
-			if (current.equals(PathFinder.getTarget())) {
+			if (current.equals(MapData.target)) {
 				return true;
 			}
-			for (final AStarNode next : PathFinder.getTraversable(current)) {
+			for (final AStarNode next : MapData.getTraversable(current)) {
 				if (!closedSet.contains(next)) {
 					final double dist = current.distance
 							+ distance(current, next);
@@ -148,7 +148,7 @@ public class AStar implements Algorithm {
 	public static abstract class Heuristic {
 
 		public final double calculate(Node current) {
-			return calculate(current, PathFinder.getTarget());
+			return calculate(current, MapData.target);
 		}
 
 		protected abstract double calculate(Node current, Node target);
